@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}31 Lab Book Store{% endblock title%}
+
+{% block content%}
+
+<img class="index_pic" src="{{ url_for('static', filename='./image/shop.png') }}">
+<h1 class="index_title">31 Lab Book Store</h1>
+<div class="btn_div">
+    <a href="{{ url_for('register') }}">
+        <button class="index_btn">註冊</button>
+    </a>
+    <a href="{{ url_for('login') }}">
+        <button class="index_btn">登入</button>
+    </a>
+</div>
+{% endblock content%}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+<div class="btn_div">
+  <h1 class="book_title left">31 Lab Book Store</h1>
+  <a href="{{ url_for('cart') }}"><img class="cart" src="{{ url_for('static', filename='./image/shopping_cart.png') }}"></a>
+</div>
+<div class="empty">
+    <img class="empty_pic" src="{{ url_for('static', filename='./image/complete.png') }}">
+    <p>下單完成！</p>
+</div>
+
+<div class="btn_div">
+    <a href="{{ url_for('bookstore') }}"><button>回書店</button></a>
+  </div>
+{% endblock content%}

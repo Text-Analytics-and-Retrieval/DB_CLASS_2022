@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+
+<h1 class="book_title">31 Lab Book Store</h1>
+<div class="book_table">
+  <form method="post" action={{ url_for('add') }}>
+    <table cellpadding="10" border='3'>
+      <tr>
+        <th>商品編號</th>
+        <td>*系統自動生成*</td>
+      </tr>
+      <tr>
+        <th>商品名稱</th>
+        <td><input type="text" name="name" ></td>
+      </tr>
+      <tr>
+        <th>單價</th>
+        <td><input type="text" name="price"></td>
+      </tr>
+      <tr>
+        <th>類別</th>
+        <td>
+          <select name="category">
+            <option value="BOOK">BOOK</option>
+            <option value="DVD">DVD</option>
+            <option value="CD">CD</option>
+        </select>
+      </tr>
+    </table>
+    <div class="btn_div">
+      <button type="submit">新增商品</button> 
+      <button><a href="{{ url_for('manager') }}">回上一頁</button> 
+    </div>
+  </form>
+</div>
+
+{% endblock content%}

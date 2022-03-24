@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+<div class="btn_div">
+  <h1 class="book_title left">31 Lab Book Store</h1>
+  <a href="{{ url_for('cart') }}"><img class="cart" src="{{ url_for('static', filename='./image/shopping_cart.png') }}"></a>
+</div>
+
+<div class="book_table">
+  <form method="post" action={{ url_for('cart') }}>
+    <table cellpadding="10" border='3'>
+      <tr>
+        <th>商品編號</th>
+        <th>商品名稱</th>
+        <th>商品價格</th>
+        <th>數量</th>
+      </tr>
+      {% for book in data %}
+      <tr>
+        <td> {{ book.商品編號 }}</td>
+        <td> {{ book.商品名稱 }}</td>
+        <td> {{ book.商品價格 }}</td>
+        <td> {{ book.數量 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <p class="total">小計：{{ total }} 元</p>
+    
+    <div class="book_table">
+        <a href="{{ url_for('cart') }}"><button type="submit" >回上頁</button></a>
+        <button type="submit" value="order" name="order">送出</button>
+    </div>
+  </form>
+</div>
+{% endblock content%}

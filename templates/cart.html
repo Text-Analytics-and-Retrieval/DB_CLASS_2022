@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+<div class="btn_div">
+  <h1 class="book_title left">31 Lab Book Store</h1>
+</div>
+{% with messages = get_flashed_messages() %}
+{% if messages[0] == 'No permission' %}
+  
+<script language="javascript">
+
+  alert('您沒有使用者的權限喔！');
+
+</script>
+
+{% endif %}
+{% endwith %}
+
+<div class="book_table">
+  <form method="post" action={{ url_for('cart') }}>
+    <table cellpadding="10" border='3'>
+      <tr>
+        <th>商品編號</th>
+        <th>商品名稱</th>
+        <th>商品價格</th>
+        <th>數量</th>
+        <th></th>
+      </tr>
+      {% for book in data %}
+      <tr>
+        <td> {{ book.商品編號 }}</td>
+        <td> {{ book.商品名稱 }}</td>
+        <td> {{ book.商品價格 }}</td>
+        <td><input class="cart_input" type="number" onkeyup="value=value.replace(/[^\d]/g,'')" min="1" value="{{ book.數量 }}" name="{{ book.商品編號 }}"></td>
+        <td> <button type="submit" value="{{book.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ book.商品名稱 }}\' 嗎？'))">
+          刪除
+        </button></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="book_table">
+      <button type="submit" value="edit" name="user_edit" >繼續購物</button>
+      <button type="submit" value="edit" name="buy" >直接結帳</button>
+    </div>
+  </form>
+</div>
+{% endblock content%}

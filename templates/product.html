@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+
+<h1 class="book_title">31 Lab Book Store</h1>
+<div class="book_table">
+  <table cellpadding="10" border='3'>
+    <tr>
+      <th>商品編號</th>
+      <td> {{ data.商品編號 }}</td>
+    </tr>
+    <tr>
+      <th>商品名稱</th>
+      <td> {{ data.商品名稱 }}</td>
+    </tr>
+    <tr>
+      <th>單價</th>
+      <td> {{ data.單價 }}</td>
+    </tr>
+    <tr>
+      <th>類別</th>
+      <td> {{ data.類別 }}</button></td>
+    </tr>
+</table>
+</div>
+<div class="btn_div">
+  <button><a href="{{ url_for('bookstore') }}">回上一頁</button> 
+</div>
+{% endblock content%}
