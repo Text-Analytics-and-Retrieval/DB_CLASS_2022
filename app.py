@@ -11,9 +11,9 @@ from sqlalchemy import null
 import cx_Oracle
 
 ## Oracle 連線
-cx_Oracle.init_oracle_client(lib_dir="./instantclient_19_8") # init Oracle instant client 位置
-connection = cx_Oracle.connect('FANG_TA', 'dbta', cx_Oracle.makedsn('140.117.69.58', 1521, 'orcl')) # 連線資訊
-cursor = connection.cursor()
+# cx_Oracle.init_oracle_client(lib_dir="./instantclient_19_8") # init Oracle instant client 位置
+# connection = cx_Oracle.connect('account', 'password', cx_Oracle.makedsn('ip', 1521, 'orcl')) # 連線資訊
+# cursor = connection.cursor()
 
 ## Flask-Login : 確保未登入者不能使用系統
 app = Flask(__name__)
@@ -571,12 +571,6 @@ def logout():
 
     logout_user()  
     return redirect(url_for('index'))
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app.debug = True #easy to debug
