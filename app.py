@@ -9,19 +9,17 @@ from numpy import identity, product
 import random, string
 from sqlalchemy import null
 import cx_Oracle
-from dotenv import load_dotenv
-load_dotenv()
+
+## Oracle 連線
+cx_Oracle.init_oracle_client(lib_dir="./instantclient_19_8") # init Oracle instant client 位置
+connection = cx_Oracle.connect('FANG_TA', 'dbta', cx_Oracle.makedsn('140.117.69.58', 1521, 'orcl')) # 連線資訊
+cursor = connection.cursor()
 
 ## Flask-Login : 確保未登入者不能使用系統
 app = Flask(__name__)
 app.secret_key = 'Your Key'  
 login_manager = LoginManager(app)
 login_manager.login_view = 'login' # 假如沒有登入的話，要登入會導入 login 這個頁面
-
-## Oracle 連線
-# cx_Oracle.init_oracle_client(lib_dir="/workspace/Demo/instantclient_21_5") # init Oracle instant client 位置
-# connection = cx_Oracle.connect('account', 'password', cx_Oracle.makedsn('ip', 1521, 'orcl')) # 連線資訊
-# cursor = connection.cursor()
 
 class User(UserMixin):
     
@@ -539,7 +537,6 @@ def dashboard():
                 dataa.append(k[1])
         
     cursor.prepare('SELECT SUM(TOTAL), CATEGORY FROM(SELECT * FROM PRODUCT,RECORD WHERE PRODUCT.PID = RECORD.PID) GROUP BY CATEGORY')
-    # cursor.prepare('SELECT SUM(PRICE) FROM ORDER_LIST GROUP BY MONTH')
     cursor.execute(None)
     row = cursor.fetchall()
     datab = []
@@ -550,21 +547,24 @@ def dashboard():
         }
         datab.append(temp)
     
-    cursor.prepare('SELECT SUM(PRICE), COUNT(*), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID GROUP BY MEMBER.MID, MEMBER.NAME')
-    cursor.execute(None)
+    cursor.prepare('SELECT SUM(PRICE), COUNT(*), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID AND MEMBER.IDENTITY = :identity AND ROWNUM<=5 GROUP BY MEMBER.MID, MEMBER.NAME ORDER BY SUM(PRICE) DESC')
+    cursor.execute(None, {'identity':'user'})
     row = cursor.fetchall()
     datac = []
+    counter = 0
     nameList = []
     countList = []
     for i in row:
+        counter = counter + 1
         datac.append(i[0])
     for j in row:
         nameList.append(j[3])
     for k in row:
         countList.append(k[1])
+    
+    counter = counter - 1
         
-        
-    return render_template('dashboard.html', revenue = revenue, dataa = dataa, datab = datab, datac = datac, nameList = nameList, countList = countList)
+    return render_template('dashboard.html', counter = counter, revenue = revenue, dataa = dataa, datab = datab, datac = datac, nameList = nameList, countList = countList)
 
 @app.route('/logout')  
 def logout():

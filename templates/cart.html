@@ -37,7 +37,7 @@
         <td> {{ book.商品名稱 }}</td>
         <td> {{ book.商品價格 }}</td>
         <td><input class="cart_input" type="number" onkeyup="value=value.replace(/[^\d]/g,'')" min="1" value="{{ book.數量 }}" name="{{ book.商品編號 }}"></td>
-        <td> <button type="submit" value="{{book.商品編號}}" name="delete" onclick="return (confirm('你確定要刪除 \'{{ book.商品名稱 }}\' 嗎？'))">
+        <td> <button type="submit" value="{{book.商品編號}}" name="delete" onclick=" return (confirm('你確定要刪除 \'{{ book.商品名稱 }}\' 嗎？'))">
           刪除
         </button></td>
       </tr>

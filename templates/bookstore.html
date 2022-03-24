@@ -40,7 +40,7 @@
       <tr>
         <td> {{ book.商品編號 }}</td>
         <td> {{ book.商品名稱 }}</td>
-        <td><button><a href="{{ url_for('bookstore', pid=book.商品編號) }}">更多資訊</button></td>
+        <td><a href="{{ url_for('bookstore', pid=book.商品編號) }}"><button type="button">更多資訊</button></a></td>
         <td><button type="submit" value="{{book.商品編號}}" name="pid" >加到購物車</button></td>
         
         <!-- 傳遞商品編號 -->
