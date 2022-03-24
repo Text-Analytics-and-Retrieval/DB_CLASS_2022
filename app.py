@@ -18,6 +18,11 @@ app.secret_key = 'Your Key'
 login_manager = LoginManager(app)
 login_manager.login_view = 'login' # 假如沒有登入的話，要登入會導入 login 這個頁面
 
+## Oracle 連線
+# cx_Oracle.init_oracle_client(lib_dir="/workspace/Demo/instantclient_21_5") # init Oracle instant client 位置
+# connection = cx_Oracle.connect('account', 'password', cx_Oracle.makedsn('ip', 1521, 'orcl')) # 連線資訊
+# cursor = connection.cursor()
+
 class User(UserMixin):
     
     pass
