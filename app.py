@@ -547,22 +547,30 @@ def dashboard():
         }
         datab.append(temp)
     
-    cursor.prepare('SELECT SUM(PRICE), COUNT(*), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID AND MEMBER.IDENTITY = :identity AND ROWNUM<=5 GROUP BY MEMBER.MID, MEMBER.NAME ORDER BY SUM(PRICE) DESC')
+    cursor.prepare('SELECT SUM(PRICE), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID AND MEMBER.IDENTITY = :identity AND ROWNUM<=5 GROUP BY MEMBER.MID, MEMBER.NAME ORDER BY SUM(PRICE) DESC')
     cursor.execute(None, {'identity':'user'})
     row = cursor.fetchall()
+    
     datac = []
-    counter = 0
     nameList = []
-    countList = []
+    counter = 0
+    
     for i in row:
         counter = counter + 1
         datac.append(i[0])
     for j in row:
-        nameList.append(j[3])
-    for k in row:
-        countList.append(k[1])
+        nameList.append(j[2])
     
     counter = counter - 1
+    
+    cursor.prepare('SELECT COUNT(*), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID AND MEMBER.IDENTITY = :identity AND ROWNUM<=5 GROUP BY MEMBER.MID, MEMBER.NAME ORDER BY COUNT(*) DESC')
+    cursor.execute(None, {'identity':'user'})
+    row = cursor.fetchall()
+    
+    countList = []
+    
+    for i in row:
+        countList.append(i[0])
         
     return render_template('dashboard.html', counter = counter, revenue = revenue, dataa = dataa, datab = datab, datac = datac, nameList = nameList, countList = countList)
 
